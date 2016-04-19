@@ -133,38 +133,7 @@
              *
              ********************************************************************************/
             getMoment = function (d) {
-                var tzEnabled = false,
-                    returnMoment,
-                    currentZoneOffset,
-                    incomingZoneOffset,
-                    timeZoneIndicator,
-                    dateWithTimeZoneInfo;
-
-                if (moment.tz !== undefined && options.timeZone !== undefined && options.timeZone !== null && options.timeZone !== '') {
-                    tzEnabled = true;
-                }
-                if (d === undefined || d === null) {
-                    if (tzEnabled) {
-                        returnMoment = moment().tz(options.timeZone).startOf('d');
-                    } else {
-                        returnMoment = moment().startOf('d');
-                    }
-                } else {
-                    if (tzEnabled) {
-                        currentZoneOffset = moment().tz(options.timeZone).utcOffset();
-                        incomingZoneOffset = moment(d, parseFormats, options.useStrict).utcOffset();
-                        if (incomingZoneOffset !== currentZoneOffset) {
-                            timeZoneIndicator = moment().tz(options.timeZone).format('Z');
-                            dateWithTimeZoneInfo = moment(d, parseFormats, options.useStrict).format('YYYY-MM-DD[T]HH:mm:ss') + timeZoneIndicator;
-                            returnMoment = moment(dateWithTimeZoneInfo, parseFormats, options.useStrict).tz(options.timeZone);
-                        } else {
-                            returnMoment = moment(d, parseFormats, options.useStrict).tz(options.timeZone);
-                        }
-                    } else {
-                        returnMoment = moment(d, parseFormats, options.useStrict);
-                    }
-                }
-                return returnMoment;
+                return d ? moment(d) : moment();
             },
             isEnabled = function (granularity) {
                 if (typeof granularity !== 'string' || granularity.length > 1) {
